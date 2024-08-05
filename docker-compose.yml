@@ -17,6 +17,7 @@ services:
       dockerfile: Dockerfile.dev
     env_file:
       - .env
+      - .env.secrets
     depends_on:
       postgres:
         condition: service_healthy
