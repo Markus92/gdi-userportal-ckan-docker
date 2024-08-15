@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ## [Unreleased]
 
 ### Added
@@ -24,6 +25,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Security
+
+## [v1.2.2] - 2024-08-15
+
+### What's Changed
+* chore: change versions of fairdatapoint harvester and gdi extensions … by @hcvdwerf in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/72
+* fix: Set compatibility_mode to false to map correctly publisher close… by @hcvdwerf in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/74
+* Vulnscan by @sehaartuc in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/76
+* feat: renovate integration by @sehaartuc in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/77
+* chore(deps): update fsfe/reuse-action action to v4 - autoclosed by @LNDS-Sysadmins in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/83
+* chore(deps): update docker/build-push-action action to v6 by @LNDS-Sysadmins in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/82
+* chore(deps): update docker/login-action digest to 0d4c9c5 by @LNDS-Sysadmins in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/79
+* chore(deps): update docker/metadata-action digest to a64d048 by @LNDS-Sysadmins in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/80
+* chore(deps): update oss-review-toolkit/ort-ci-github-action digest to 81698a9 by @LNDS-Sysadmins in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/81
+* chore(deps): update postgres docker tag to v16 by @LNDS-Sysadmins in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/84
+* chore(deps): update azure/webapps-deploy digest to 5c1d76e by @LNDS-Sysadmins in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/78
+* chore: setup default user permissions by @brunopacheco1 in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/109
+* chore: change from Catalogues to Organizations by @nolliia in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/110
+* chore: merge RUN commands by @brunopacheco1 in https://github.com/GenomicDataInfrastructure/gdi-userportal-ckan-docker/pull/111
 
 ## [v1.2.1] - 2024-06-12
 
