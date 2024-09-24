@@ -4,15 +4,15 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-FROM ckan/ckan-base:2.10.5
+FROM ckan/ckan-base:2.11
 
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@v1.3.0#egg=ckanext-gdi-userportal && \
     pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt
 
-RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v1.5.1#egg=ckanext-dcat && \
+RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v2.0.0#egg=ckanext-dcat && \
     pip3 install -r ${APP_DIR}/src/ckanext-dcat/requirements.txt
 
-RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git@v1.5.6#egg=ckanext-harvest && \
+RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git@bf849f1#egg=ckanext-harvest && \
     pip3 install -r ${APP_DIR}/src/ckanext-harvest/requirements.txt
 
 RUN pip3 install -e git+https://github.com/CivityNL/ckanext-scheming.git@release-3.0.0-civity#egg=ckanext-scheming[requirements]
@@ -20,10 +20,8 @@ RUN pip3 install -e git+https://github.com/CivityNL/ckanext-scheming.git@release
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-fairdatapoint.git@v1.3.0#egg=ckanext-fairdatapoint && \
     pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
 
-# Install Supervisor and cron
-RUN apk update \
-    && apk add --no-cache supervisor cronie \
-    && rm -rf /var/cache/apk/*
+# # Install cron and postgres client
+RUN apt-get install --no-install-recommends -y cron postgresql-client
 
 # Create log directories for CKAN harvester
 RUN mkdir -p /var/log/ckan/std && chown -R ckan:ckan /var/log/ckan
@@ -56,7 +54,7 @@ RUN for d in $APP_DIR/patches/*; do \
     fi ; \
     done
 
-ENV CKAN__PLUGINS="envvars image_view text_view recline_view scheming_datasets scheming_organizations dcat dcat_json_interface harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester fairdatapointharvester gdi_userportal activity"
+ENV CKAN__PLUGINS="envvars image_view datatables_view text_view scheming_datasets scheming_organizations dcat dcat_json_interface harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester fairdatapointharvester gdi_userportal activity"
 
 COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 
