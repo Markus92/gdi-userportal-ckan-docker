@@ -4,7 +4,7 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-only
 
-FROM ckan/ckan-base:2.11
+FROM ckan/ckan-base:2.11.0
 
 RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userportal-ckanext-gdi-userportal.git@v1.3.0#egg=ckanext-gdi-userportal && \
     pip3 install -r ${APP_DIR}/src/ckanext-gdi-userportal/requirements.txt
@@ -12,6 +12,8 @@ RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userpo
 RUN  pip3 install -e git+https://github.com/ckan/ckanext-dcat.git@v2.0.0#egg=ckanext-dcat && \
     pip3 install -r ${APP_DIR}/src/ckanext-dcat/requirements.txt
 
+# TODO there was no released version compatible with CKAN 2.11 as of September 2024.
+# Please check again later in https://github.com/ckan/ckanext-harvest
 RUN pip3 install -e git+https://github.com/ckan/ckanext-harvest.git@bf849f1#egg=ckanext-harvest && \
     pip3 install -r ${APP_DIR}/src/ckanext-harvest/requirements.txt
 
@@ -21,7 +23,12 @@ RUN  pip3 install -e git+https://github.com/GenomicDataInfrastructure/gdi-userpo
     pip3 install -r ${APP_DIR}/src/ckanext-fairdatapoint/requirements.txt
 
 # # Install cron and postgres client
-RUN apt-get install --no-install-recommends -y cron postgresql-client
+# cron is necessary for harvesting, postgres client for vocabulary seeding
+RUN \
+    --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update \
+    && apt-get install -y --no-install-recommends cron postgresql-client
 
 # Create log directories for CKAN harvester
 RUN mkdir -p /var/log/ckan/std && chown -R ckan:ckan /var/log/ckan
@@ -54,11 +61,11 @@ RUN for d in $APP_DIR/patches/*; do \
     fi ; \
     done
 
-ENV CKAN__PLUGINS="envvars image_view datatables_view text_view scheming_datasets scheming_organizations dcat dcat_json_interface harvest ckan_harvester dcat_rdf_harvester dcat_json_harvester fairdatapointharvester gdi_userportal activity"
+ENV CKAN__PLUGINS="envvars scheming_datasets scheming_organizations dcat harvest ckan_harvester dcat_rdf_harvester fairdatapointharvester gdi_userportal activity"
 
 COPY  --chown=ckan:ckan setup/prerun.py ${APP_DIR}
 
-# TODO 
+# TODO
 # 1. Remove this command once the issue is fixed
 # https://github.com/ckan/ckan-docker-base/issues/41
 RUN mkdir -p /var/lib/ckan/storage/uploads/group && \
